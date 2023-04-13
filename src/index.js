@@ -1,6 +1,7 @@
 const express = require('express');
 const { ApolloServer, gql } = require('apollo-server-express');
 require('dotenv').config();
+const jwt = require('jsonwebtoken');
 
 const db = require('./db');
 const models = require('./models');
@@ -14,13 +15,26 @@ const app = express();
 
 db.connect(DB_HOST);
 
+const getUser = token => {
+  if (token) {
+    try {
+      return jwt.verify(token, process.env.JWT_SECRET);
+    } catch (err) {
+      throw new Error('Session invalid');
+    }
+  }
+};
+
 //아폴로 서버 설정
-const server = new ApolloServer({ 
-  typeDefs, 
+const server = new ApolloServer({
+  typeDefs,
   resolvers,
-  context: () => {
-    return { models };
-  } 
+  context: ({ req }) => {
+    const token = req.headers.authorization;
+    const user = getUser(token);
+    console.log('user', user);
+    return { models, user };
+  }
 });
 
 //아폴로 그래프QL 미들웨어를 적용, 경로를 /api로 설정
