@@ -1,6 +1,8 @@
 const express = require('express');
 const { ApolloServer, gql } = require('apollo-server-express');
 require('dotenv').config();
+const helmet = require('helmet');
+const cors = require('cors');
 
 const db = require('./db');
 const models = require('./models');
@@ -11,6 +13,8 @@ const DB_HOST = process.env.DB_HOST;
 const port = process.env.PORT || 4000;
 
 const app = express();
+app.use(helmet());
+app.use(cors());
 
 db.connect(DB_HOST);
 

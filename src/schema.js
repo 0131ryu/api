@@ -11,9 +11,16 @@ module.exports = gql`
     updatedAt: DateTime!
   }
 
+  type NoteFeed {
+    notes: [Note]!
+    cursor: String!
+    hasNextPage: Boolean!
+  }
+
   type Query {
     notes: [Note!]!
     note(id: ID): Note!
+    noteFeed(cursor: String): NoteFeed
   }
 
   type Mutation {
