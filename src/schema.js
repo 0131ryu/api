@@ -13,12 +13,11 @@ module.exports = gql`
     updatedAt: DateTime!
   }
 
-<<<<<<< HEAD
   type NoteFeed {
     notes: [Note]!
     cursor: String!
     hasNextPage: Boolean!
-=======
+
   type User {
     id: ID!
     username: String!
@@ -26,19 +25,15 @@ module.exports = gql`
     favorites: [Note!]!
     avatar: String
     notes: [Note!]!
->>>>>>> d7c2773d8cf6bad798cde65e19d56986154f97ac
   }
 
   type Query {
     notes: [Note!]!
     note(id: ID): Note!
-<<<<<<< HEAD
     noteFeed(cursor: String): NoteFeed
-=======
     user(username: String!): User
     users: [User!]!
     me: User!
->>>>>>> d7c2773d8cf6bad798cde65e19d56986154f97ac
   }
 
   type Mutation {
